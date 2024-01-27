@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "sort.h"
 
 /**
  * swap - Swap two integers
@@ -19,31 +20,22 @@ void swap(int *a, int *b)
  */
 void selection_sort(int *array, size_t size)
 {
-    size_t i, j, min_idx, k;
+	int *min;
+	size_t i, j;
 
-    for (i = 0; i < size - 1; i++)
-    {
-        min_idx = i;
+	if (array == NULL || size < 2)
+		return;
 
-        for (j = i + 1; j < size; j++)
-        {
-            if (array[j] < array[min_idx])
-            {
-                min_idx = j;
-            }
-        }
+	for (i = 0; i < size - 1; i++)
+	{
+		min = array + i;
+		for (j = i + 1; j < size; j++)
+			min = (array[j] < *min) ? (array + j) : min;
 
-        /* Swap the found minimum element with the first element */
-        swap(&array[min_idx], &array[i]);
-
-        /* Print the array after each swap */
-        for (k = 0; k < size; k++)
-        {
-            if (k == size - 1)
-                printf("%d", array[k]);
-            else
-                printf("%d, ", array[k]);
-        }
-        printf("\n");
-    }
+		if ((array + i) != min)
+		{
+			swap(array + i, min);
+			print_array(array, size);
+		}
+	}
 }
